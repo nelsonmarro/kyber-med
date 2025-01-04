@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: dev
+    container_name: kybermed_app
+    ports:
+      - "3000:3000"
+    environment:
+      - KYBERMED_DATABASE_HOST=localhost
+      - KYBERMED_DATABASE_PORT=5432
+      - KYBERMED_DATABASE_USER=postgres
+      - KYBERMED_DATABASE_PASSWORD=postgres
+      - KYBERMED_DATABASE_NAME=kybermed
+    volumes:
+      - ../:/app:cached
+      - ./config:/app/config
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: kybermed_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: kybermed
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
