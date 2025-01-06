@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   app:
     build:
@@ -10,14 +8,15 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - KYBERMED_DATABASE_HOST=localhost
+      - KYBERMED_DATABASE_HOST=db
       - KYBERMED_DATABASE_PORT=5432
       - KYBERMED_DATABASE_USER=postgres
       - KYBERMED_DATABASE_PASSWORD=postgres
       - KYBERMED_DATABASE_NAME=kybermed
+      - KYBERMED_DATABASE_SSLMODE=disable
+      - KYBERMED_DATABASE_TIMEZONE=America/Guayaquil
     volumes:
       - ../:/app:cached
-      - ./config:/app/config
     depends_on:
       - db
 

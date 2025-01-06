@@ -47,6 +47,8 @@ func (s *fiberServer) Start() {
 	v1 := api.Group("/v1")
 
 	v1.Get("/", func(c fiber.Ctx) error {
-		return c.SendStatus(fiber.StatusOK)
+		return c.SendString("Hello, World!")
 	})
+
+	log.Fatal(s.app.Listen(":3000"))
 }

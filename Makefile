@@ -1,9 +1,12 @@
-project_name = kybermed
-image_name = kybermed:latest
-dev_image_name = kybermed-dev 
+DOCKER_COMPOSE = docker-compose -f deploy/docker-compose.yml
+APP_SERVICE = app
+GENERATOR_IMAGE = ghcr.io/a-h/templ:latest
+PROJECT_DIR = $(PWD)
 
-help: ## This help dialog.
-	@grep -F -h "##" $(MAKEFILE_LIST) | grep -F -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+.PHONY: help up down build generate dev test clean logs shell
+
+help: ## This help dialog
+	@grep -E '^[a-zA-Z_-]+:.*?##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?##"}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
 run-local: ## Run the app locally
 	go run ./cmd/kybermed/main.go
@@ -14,39 +17,29 @@ requirements: ## Generate go.mod & go.sum files
 clean-packages: ## Clean packages
 	go clean -modcache
 
-up: ## Run the project in a local container
-	make up-silent
-	make shell
+generate: ## Generate code with Templ
+	docker run --rm -v $(PWD):/app -w /app $(GENERATOR_IMAGE) generate
 
-build: ## Generate docker image
-	docker build -t $(image_name) -f deploy/Dockerfile .
+up: generate ## Run the project in a local container
+	$(DOCKER_COMPOSE) up --build
 
-build-no-cache: ## Generate docker image with no cache
-	docker build --no-cache -t $(image_name) -f deploy/Dockerfile .
+down: ## Stop all running containers
+	$(DOCKER_COMPOSE) down
 
-up-silent: ## Run local container in background
-	make delete-container-if-exist
-	docker run -d -p 3000:3000 --name $(project_name) $(image_name) ./app
+build: ## Build the production Docker image
+	docker build -t kybermed:latest -f deploy/Dockerfile .
 
-up-silent-prefork: ## Run local container in background with prefork
-	make delete-container-if-exist
-	docker run -d -p 3000:3000 --name $(project_name) $(image_name) ./app -prod
+dev: generate ## Run development environment with Air
+	$(DOCKER_COMPOSE) up $(APP_SERVICE)
 
-delete-container-if-exist: ## Delete container if it exists
-	docker stop $(project_name) || true && docker rm $(project_name) || true
+test: ## Run tests inside the container
+	$(DOCKER_COMPOSE) run --rm $(APP_SERVICE) go test -v ./...
 
-shell: ## Run interactive shell in the container
-	docker exec -it $(project_name) /bin/sh
+logs: ## View logs from the app container
+	$(DOCKER_COMPOSE) logs -f $(APP_SERVICE)
 
-stop: ## Stop the container
-	docker stop $(project_name)
+shell: ## Open an interactive shell in the app container
+	docker exec -it $(APP_SERVICE) /bin/sh
 
-start: ## Start the container
-	docker start $(project_name)
-
-build-dev:
-	docker build --target dev -t $(dev_image_name) -f deploy/Dockerfile .
-
-up-dev: ## Run dev container con volumen montado y modo interactivo
-	docker run -it --rm -p 3000:3000 -v "$$(pwd)":/app $(dev_image_name)
-
+clean: ## Clean up Docker volumes and containers
+	$(DOCKER_COMPOSE) down -v
