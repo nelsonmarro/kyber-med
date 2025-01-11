@@ -3,11 +3,11 @@ package dtos
 import (
 	"time"
 
-	"github.com/nelsonmarro/kyber-med/internal/shared/shareddtos"
+	"github.com/nelsonmarro/kyber-med/common/commondtos"
 )
 
 type PacientDto struct {
-	shareddtos.BaseDto
+	commondtos.BaseDto
 	FirstName             string    `json:"firstName"`
 	LastName              string    `json:"lastName"`
 	Email                 string    `json:"email"`

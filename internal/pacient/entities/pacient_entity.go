@@ -3,11 +3,11 @@ package entities
 import (
 	"time"
 
-	"github.com/nelsonmarro/kyber-med/internal/shared/sharedentities"
+	"github.com/nelsonmarro/kyber-med/common/commonentities"
 )
 
 type Pacient struct {
-	sharedentities.BaseEntity
+	commonentities.BaseEntity
 	FirstName             string    `gorm:"type:varchar(100);not null"`
 	LastName              string    `gorm:"type:varchar(100);not null"`
 	Email                 string    `gorm:"type:varchar(100);not null;unique"`

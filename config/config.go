@@ -28,6 +28,10 @@ type Config struct {
 		SSLMode  string
 		TimeZone string
 	}
+
+	Jwt struct {
+		Key string
+	}
 }
 
 var (

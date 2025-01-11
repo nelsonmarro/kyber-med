@@ -1,7 +1,7 @@
 package handlers
 
-import "github.com/gofiber/fiber/v3"
+import "github.com/gofiber/fiber/v2"
 
 type PacientHandler interface {
-	GetAllPacients(c *fiber.Ctx) error
+	GetPacientsByCursor(c *fiber.Ctx) error
 }

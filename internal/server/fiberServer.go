@@ -1,14 +1,17 @@
 package server
 
 import (
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/log"
-	"github.com/gofiber/fiber/v3/middleware/logger"
-	"github.com/gofiber/fiber/v3/middleware/recover"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 
-	"github.com/gofiber/fiber/v3/middleware/healthcheck"
+	"github.com/gofiber/fiber/v2/middleware/healthcheck"
+
 	"github.com/nelsonmarro/kyber-med/config"
 	"github.com/nelsonmarro/kyber-med/internal/database"
+	"github.com/nelsonmarro/kyber-med/internal/pacient/handlers"
+	"github.com/nelsonmarro/kyber-med/internal/server/middlewares"
 )
 
 type fiberServer struct {
@@ -36,19 +39,12 @@ func (s *fiberServer) Start() {
 		TimeZone:   "America/Guayaquil",
 	}))
 
-	// Provide a minimal config for liveness check
-	s.app.Get(healthcheck.DefaultLivenessEndpoint, healthcheck.NewHealthChecker())
-	// Provide a minimal config for readiness check
-	s.app.Get(healthcheck.DefaultReadinessEndpoint, healthcheck.NewHealthChecker())
-	// Provide a minimal config for startup check
-	s.app.Get(healthcheck.DefaultStartupEndpoint, healthcheck.NewHealthChecker())
+	s.app.Use(healthcheck.New())
 
 	api := s.app.Group("/api")
 	v1 := api.Group("/v1")
 
-	v1.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
+	handlers.RegisterPacientHandlers(v1, s.db, middlewares.NewJwtMiddleware(s.conf.Jwt.Key))
 
 	log.Fatal(s.app.Listen(":3000"))
 }
