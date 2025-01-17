@@ -20,7 +20,7 @@ func (r *userRepositoryImpl) GetUserByEmail(email string) (*entities.User, error
 	db := r.db.GetDb()
 
 	var user entities.User
-	if err := db.Where(&entities.User{Email: email}).First(&user).Error; err != nil {
+	if err := db.Where("email = ?", email).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}

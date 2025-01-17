@@ -13,7 +13,7 @@ type BaseEntity struct {
 	ID        string `gorm:"type:uuid;primary_key;"`
 	CreatedAt int
 	UpdatedAt int
-	DeletedAt soft_delete.DeletedAt `gorm:"index"`
+	DeletedAt soft_delete.DeletedAt
 }
 
 func (b *BaseEntity) BeforeCreate(tx *gorm.DB) (err error) {
