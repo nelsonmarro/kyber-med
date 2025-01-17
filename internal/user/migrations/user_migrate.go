@@ -30,12 +30,14 @@ func pacientMigrate(db database.Database) {
 	}
 
 	user := entities.User{
+		Email:    "nelsonmarro99@gmail.com",
 		Role:     constanst.RoleUser,
 		IDCard:   strconv.Itoa(rand.Intn(99999)),
 		Password: string(hashedPassword),
 	}
 
 	admin := entities.User{
+		Email:    "admin99@gmail.com",
 		Role:     constanst.RoleAdmin,
 		IDCard:   strconv.Itoa(rand.Intn(99999)),
 		Password: string(hashedPassword),
