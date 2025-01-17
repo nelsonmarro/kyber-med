@@ -16,7 +16,7 @@ services:
       - KYBERMED_DATABASE_SSLMODE=disable
       - KYBERMED_DATABASE_TIMEZONE=America/Guayaquil
     volumes:
-      - ../:/app:cached
+      - ../:/app
     command: air -c .air.toml
     depends_on:
       - db

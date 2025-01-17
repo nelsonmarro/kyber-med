@@ -13,8 +13,8 @@ ENV PATH="/go/bin:${PATH}"
 WORKDIR /app
 
 # Copiar dependencias primero
-COPY go.mod go.sum ./
-RUN go mod download
+COPY go.mod ./
+RUN go mod download && go mod verify
 
 # Copiar el código fuente, plantillas y archivos generados
 COPY . .
