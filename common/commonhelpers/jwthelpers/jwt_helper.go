@@ -22,7 +22,7 @@ func GenerateToken(userID, role, jwtKey string) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	tokenString, err := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString([]byte(jwtKey))
 	if err != nil {
 		return "", err
 	}
@@ -31,8 +31,15 @@ func GenerateToken(userID, role, jwtKey string) (string, error) {
 }
 
 func ValidToken(t *jwt.Token, id string) bool {
-	claims := t.Claims.(jwt.MapClaims)
-	uid := claims["user_id"]
+	claims, ok := t.Claims.(jwt.MapClaims)
+	if !ok {
+		return false
+	}
+
+	uid, ok := claims["user_id"].(string)
+	if !ok {
+		return false
+	}
 
 	return uid == id
 }
