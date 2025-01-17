@@ -42,7 +42,7 @@ func (h *userHttpHandler) Register(c *fiber.Ctx) error {
 
 func (h *userHttpHandler) Login(c *fiber.Ctx) error {
 	var loginInput dtos.UserLoginDTO
-	if err := c.BodyParser(loginInput); err != nil {
+	if err := c.BodyParser(&loginInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Error on login request", "errors": err.Error()})
 	}
 
