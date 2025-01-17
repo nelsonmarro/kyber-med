@@ -10,8 +10,9 @@ import (
 
 	"github.com/nelsonmarro/kyber-med/config"
 	"github.com/nelsonmarro/kyber-med/internal/database"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/handlers"
+	pacienthandlers "github.com/nelsonmarro/kyber-med/internal/pacient/handlers"
 	"github.com/nelsonmarro/kyber-med/internal/server/middlewares"
+	userhandlers "github.com/nelsonmarro/kyber-med/internal/user/handlers"
 )
 
 type fiberServer struct {
@@ -41,10 +42,23 @@ func (s *fiberServer) Start() {
 
 	s.app.Use(healthcheck.New())
 
+	jwt := middlewares.NewJwtMiddleware(s.conf.Jwt.Key)
+
 	api := s.app.Group("/api")
 	v1 := api.Group("/v1")
 
-	handlers.RegisterPacientHandlers(v1, s.db, middlewares.NewJwtMiddleware(s.conf.Jwt.Key))
+	auth := v1.Group("/auth")
+	userhandlers.RegisterAuthHandlers(auth, s.conf, s.db)
+
+	users := v1.Group("/users", jwt)
+	userhandlers.RegisterUserHandlers(users, s.conf, s.db)
+
+	pacients := v1.Group("/pacients", jwt)
+	pacienthandlers.RegisterPacientHandlers(pacients, s.db)
+
+	s.app.Use(func(c *fiber.Ctx) error {
+		return c.SendStatus(404) // => 404 "Not Found"
+	})
 
 	log.Fatal(s.app.Listen(":3000"))
 }

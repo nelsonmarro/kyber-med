@@ -53,7 +53,7 @@ func (suite *PacientServiceTestSuite) TestGetPacientsByCursor_Success() {
 	mockRepo := repositories.NewMockPacientRepository(suite.T())
 
 	// instanciar el servicio con el mock
-	svc := NewPacientServiceImpl(mockRepo)
+	svc := NewPacientService(mockRepo)
 
 	mockRepo.EXPECT().FindByCursor("", 2, "asc").Return(suite.pacients, suite.pagination, nil)
 
@@ -80,7 +80,7 @@ func (suite *PacientServiceTestSuite) TestGetPacientsByCursor_Error() {
 	mockRepo := repositories.NewMockPacientRepository(suite.T())
 
 	// instanciar el servicio con el mock
-	svc := NewPacientServiceImpl(mockRepo)
+	svc := NewPacientService(mockRepo)
 
 	mockRepo.EXPECT().FindByCursor("", 10, "asc").Return([]entities.Pacient{}, commondtos.PaginationInfo{}, errors.New("error to fetch pacients"))
 

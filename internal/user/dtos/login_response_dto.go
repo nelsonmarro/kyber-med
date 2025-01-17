@@ -1,5 +1,5 @@
 package dtos
 
-type LoginRequest struct {
+type LoginResponseDTO struct {
 	Token string `json:"token"`
 }

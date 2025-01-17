@@ -1,3 +1,6 @@
+###########################################
+# Construcción (Desarrollo)
+###########################################
 FROM golang:1.23-alpine AS dev
 
 RUN go install github.com/a-h/templ/cmd/templ@latest \
@@ -15,10 +18,9 @@ RUN go mod download
 COPY . .
 
 EXPOSE 3000
-CMD ["air", "-c", ".air.toml"]
 
 ###########################################
-# Etapa 3: Construcción (Producción)
+# Construcción (Producción)
 ###########################################
 FROM golang:1.23-alpine AS build
 
@@ -50,4 +52,5 @@ RUN apk -U upgrade \
   && chmod +x /app/app
 
 EXPOSE 3000
+
 ENTRYPOINT ["/usr/bin/dumb-init", "--", "/app/app"]

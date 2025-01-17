@@ -17,6 +17,7 @@ services:
       - KYBERMED_DATABASE_TIMEZONE=America/Guayaquil
     volumes:
       - ../:/app:cached
+    command: air -c .air.toml
     depends_on:
       - db
 

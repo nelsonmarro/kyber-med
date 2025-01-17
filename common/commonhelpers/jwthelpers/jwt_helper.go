@@ -17,7 +17,6 @@ func GenerateToken(userID, role, jwtKey string) (string, error) {
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			Issuer:    "nutricional_app",
 		},
 	}
 
@@ -31,15 +30,9 @@ func GenerateToken(userID, role, jwtKey string) (string, error) {
 	return tokenString, nil
 }
 
-func VerifyToken(tokenString, jwtKey string) (bool, error) {
-	claims := &commondtos.Claims{}
+func ValidToken(t *jwt.Token, id string) bool {
+	claims := t.Claims.(jwt.MapClaims)
+	uid := claims["user_id"]
 
-	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-		return jwtKey, nil
-	})
-	if err != nil {
-		return false, err
-	}
-
-	return token.Valid, nil
+	return uid == id
 }

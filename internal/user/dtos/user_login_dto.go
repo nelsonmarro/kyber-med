@@ -1,7 +1,6 @@
 package dtos
 
 type UserLoginDTO struct {
-	Email    string `json:"email"`
-	IDCard   string `json:"idCard"`
+	Identity string `json:"identity"`
 	Password string `json:"password"`
 }

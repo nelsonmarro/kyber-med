@@ -10,10 +10,8 @@ import (
 
 func RegisterPacientHandlers(router fiber.Router, db database.Database, middlewares ...fiber.Handler) {
 	pacientRepo := repositories.NewPacientRepository(db)
-	pacientService := services.NewPacientServiceImpl(pacientRepo)
+	pacientService := services.NewPacientService(pacientRepo)
 	pacientHandler := NewPacientHttpHandler(pacientService)
 
-	pacientRoutes := router.Group("pacients", middlewares...)
-
-	pacientRoutes.Get("/", pacientHandler.GetPacientsByCursor)
+	router.Get("/", pacientHandler.GetPacientsByCursor)
 }

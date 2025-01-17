@@ -10,7 +10,7 @@ type pacientServiceImpl struct {
 	pacientRepository repositories.PacientRepository
 }
 
-func NewPacientServiceImpl(pacientRepository repositories.PacientRepository) PacientService {
+func NewPacientService(pacientRepository repositories.PacientRepository) PacientService {
 	return &pacientServiceImpl{
 		pacientRepository: pacientRepository,
 	}
