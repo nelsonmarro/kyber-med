@@ -14,10 +14,8 @@ func RegisterAuthHandlers(router fiber.Router, config *config.Config, db databas
 	userService := services.NewUserService(userRepo)
 	userHandler := NewUserHttpHandler(userService, config)
 
-	userRoutes := router.Group("auth", middlewares...)
-
-	userRoutes.Post("/register", userHandler.Register)
-	userRoutes.Post("/login", userHandler.Login)
+	router.Post("/register", userHandler.Register)
+	router.Post("/login", userHandler.Login)
 }
 
 func RegisterUserHandlers(router fiber.Router, config *config.Config, db database.Database, middlewares ...fiber.Handler) {
@@ -25,9 +23,7 @@ func RegisterUserHandlers(router fiber.Router, config *config.Config, db databas
 	userService := services.NewUserService(userRepo)
 	userHandler := NewUserHttpHandler(userService, config)
 
-	userRoutes := router.Group("users", middlewares...)
-
-	userRoutes.Get("/:id", userHandler.GetUserByID)
-	userRoutes.Patch("/:id", userHandler.UpdateUser)
-	userRoutes.Delete("/:id", userHandler.DeleteUser)
+	router.Get("/:id", userHandler.GetUserByID)
+	router.Patch("/:id", userHandler.UpdateUser)
+	router.Delete("/:id", userHandler.DeleteUser)
 }

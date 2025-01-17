@@ -56,9 +56,9 @@ func (s *fiberServer) Start() {
 	pacients := v1.Group("/pacients", jwt)
 	pacienthandlers.RegisterPacientHandlers(pacients, s.db)
 
-	s.app.Use(func(c *fiber.Ctx) error {
-		return c.SendStatus(404) // => 404 "Not Found"
-	})
+	// s.app.Use(func(c *fiber.Ctx) error {
+	// 	return c.SendStatus(404) // => 404 "Not Found"
+	// })
 
 	log.Fatal(s.app.Listen(":3000"))
 }
