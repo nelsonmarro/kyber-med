@@ -31,16 +31,13 @@ generate: ## Generate code with Templ
 		$(GENERATOR_IMAGE) generate
 
 up: generate ## Run the project in a local container
-	$(DOCKER_COMPOSE) up --build
+	$(DOCKER_COMPOSE) up $(APP_SERVICE) --build
 
 down: ## Stop all running containers
 	$(DOCKER_COMPOSE) down
 
 build: ## Build the production Docker image
-	docker build --no-cache -t kybermed_server:latest -f deploy/Dockerfile .
-
-dev: generate ## Run development environment with Air
-	$(DOCKER_COMPOSE) up $(APP_SERVICE) --build
+	$(DOCKER_COMPOSE) build --no-cache
 
 test:
 	go test -v ./...
