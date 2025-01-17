@@ -5,7 +5,6 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
-	"gorm.io/plugin/soft_delete"
 )
 
 type BaseEntity struct {
@@ -13,7 +12,7 @@ type BaseEntity struct {
 	ID        string `gorm:"type:uuid;primary_key;"`
 	CreatedAt int
 	UpdatedAt int
-	DeletedAt soft_delete.DeletedAt
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 func (b *BaseEntity) BeforeCreate(tx *gorm.DB) (err error) {

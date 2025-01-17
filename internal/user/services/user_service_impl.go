@@ -1,8 +1,6 @@
 package services
 
 import (
-	"github.com/gofiber/fiber/v2/log"
-
 	"github.com/nelsonmarro/kyber-med/common/commondtos"
 	"github.com/nelsonmarro/kyber-med/common/commonhelpers"
 	"github.com/nelsonmarro/kyber-med/internal/user/dtos"
@@ -39,7 +37,6 @@ func (s *userService) GetUserById(id string) (*dtos.UserDTO, error) {
 
 func (s *userService) GetUserWithPasswordByEmail(email string) (*dtos.UserDTO, string, error) {
 	dbUser, error := s.userRepository.GetUserByEmail(email)
-	log.Info(dbUser)
 	if error != nil {
 		return nil, "", error
 	}
