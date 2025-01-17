@@ -3,6 +3,8 @@
 ###########################################
 FROM golang:1.23-alpine AS dev
 
+ENV GOLANG_VERSION 1.23.5
+
 RUN go install github.com/a-h/templ/cmd/templ@latest \
   && go install github.com/air-verse/air@latest
 
@@ -23,6 +25,8 @@ EXPOSE 3000
 # Construcción (Producción)
 ###########################################
 FROM golang:1.23-alpine AS build
+
+ENV GOLANG_VERSION 1.23.5
 
 WORKDIR /go/src/kybermed_server
 
