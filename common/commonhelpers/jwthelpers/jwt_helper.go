@@ -13,6 +13,7 @@ func GenerateToken(userID, email, role, jwtKey string) (string, error) {
 
 	claims := commondtos.Claims{
 		UserID: userID,
+		Email:  email,
 		Role:   role,
 
 		RegisteredClaims: jwt.RegisteredClaims{
