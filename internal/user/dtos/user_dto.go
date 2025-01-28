@@ -8,6 +8,7 @@ import (
 type UserDTO struct {
 	commondtos.BaseDto
 	IDCard string             `json:"idCard"`
+	Name   string             `json:"name"`
 	Email  string             `json:"email"`
 	Role   constanst.UserRole `json:"role"`
 }
