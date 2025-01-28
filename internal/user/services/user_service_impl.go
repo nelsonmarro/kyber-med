@@ -46,6 +46,7 @@ func (s *userService) GetUserWithPasswordByEmail(email string) (*dtos.UserDTO, s
 			ID:        dbUser.ID,
 			CreatedAt: dbUser.CreatedAt,
 		},
+		Name:   dbUser.Name,
 		IDCard: dbUser.IDCard,
 		Email:  dbUser.Email,
 		Role:   dbUser.Role,

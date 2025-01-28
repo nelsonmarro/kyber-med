@@ -30,6 +30,7 @@ func pacientMigrate(db database.Database) {
 	}
 
 	user := entities.User{
+		Name:     "Nelson Marro",
 		Email:    "nelsonmarro99@gmail.com",
 		Role:     constanst.RoleUser,
 		IDCard:   strconv.Itoa(rand.Intn(99999)),
@@ -37,6 +38,7 @@ func pacientMigrate(db database.Database) {
 	}
 
 	admin := entities.User{
+		Name:     "Admin",
 		Email:    "admin99@gmail.com",
 		Role:     constanst.RoleAdmin,
 		IDCard:   strconv.Itoa(rand.Intn(99999)),

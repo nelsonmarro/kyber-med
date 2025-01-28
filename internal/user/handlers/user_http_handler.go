@@ -64,7 +64,7 @@ func (h *userHttpHandler) Login(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "Invalid identity or password", "data": nil})
 	}
 
-	token, err := jwthelpers.GenerateToken(user.ID, user.Email, string(user.Role), h.conf.Jwt.Key)
+	token, err := jwthelpers.GenerateToken(user.ID, user.Name, user.Email, string(user.Role), h.conf.Jwt.Key)
 	if err != nil {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
