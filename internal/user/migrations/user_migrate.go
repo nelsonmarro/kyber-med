@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"math/rand"
+	"os"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2/log"
@@ -16,6 +17,8 @@ import (
 )
 
 func main() {
+	args := os.Args[1:] // Obtener los argumentos pasados por consola
+
 	conf := config.LoadConfig("config")
 	db := database.NewDatabase(conf)
 
@@ -50,6 +53,11 @@ func pacientMigrate(db database.Database) {
 	var userDb entities.User
 	result := db.GetDb().First(&userDb)
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		db.GetDb().Create(&user)
+		db.GetDb().Create(&admin)
+	} else {
+		db.GetDb().Migrator().DropTable(entities.User{})
+		db.GetDb().Migrator().CreateTable(entities.User{})
 		db.GetDb().Create(&user)
 		db.GetDb().Create(&admin)
 	}
