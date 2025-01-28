@@ -8,15 +8,15 @@ import (
 	"github.com/nelsonmarro/kyber-med/common/commondtos"
 )
 
-func GenerateToken(userID, email, role, jwtKey string) (string, error) {
+func GenerateToken(userID, name, email, role, jwtKey string) (string, error) {
 	expirationTime := time.Now().Add(72 * time.Hour)
 
 	claims := commondtos.Claims{
-		UserID: userID,
-		Email:  email,
-		Role:   role,
-
+		Name:  name,
+		Email: email,
+		Role:  role,
 		RegisteredClaims: jwt.RegisteredClaims{
+			Subject:   userID,
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
