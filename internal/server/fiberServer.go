@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 
@@ -41,6 +42,10 @@ func (s *fiberServer) Start() {
 	}))
 
 	s.app.Use(healthcheck.New())
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "https://gofiber.io, https://gofiber.net",
+	}))
 
 	jwt := middlewares.NewJwtMiddleware(s.conf.Jwt.Key)
 
