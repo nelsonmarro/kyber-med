@@ -21,10 +21,9 @@ func (r *userRepositoryImpl) GetUserByEmail(email string) (*entities.User, error
 
 	var user entities.User
 	if err := db.Where("email = ?", email).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, nil
+		if err != nil {
+			return nil, err
 		}
-		return nil, err
 	}
 	return &user, nil
 }
