@@ -54,10 +54,10 @@ func (h *userHttpHandler) Login(c *fiber.Ctx) error {
 		user, pass, err = h.userService.GetUserWithPassswordByIDCard(loginInput.Identity)
 	}
 
-	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Internal Server Error", "data": err})
-	} else if user == nil {
+	if user == nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "Invalid identity or password", "data": err})
+	} else if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Internal Server Error", "data": err})
 	}
 
 	if !commonhelpers.CheckPasswordHash(pass, loginInput.Password) {
