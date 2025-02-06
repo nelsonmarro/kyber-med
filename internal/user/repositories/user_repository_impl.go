@@ -1,11 +1,8 @@
 package repositories
 
 import (
-	"errors"
-
 	"github.com/nelsonmarro/kyber-med/internal/database"
 	"github.com/nelsonmarro/kyber-med/internal/user/entities"
-	"gorm.io/gorm"
 )
 
 type userRepositoryImpl struct {
@@ -21,9 +18,7 @@ func (r *userRepositoryImpl) GetUserByEmail(email string) (*entities.User, error
 
 	var user entities.User
 	if err := db.Where("email = ?", email).First(&user).Error; err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return &user, nil
 }
@@ -33,9 +28,6 @@ func (r *userRepositoryImpl) GetUserByIDCard(idCard string) (*entities.User, err
 
 	var user entities.User
 	if err := db.Where(&entities.User{Email: idCard}).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, nil
-		}
 		return nil, err
 	}
 	return &user, nil
