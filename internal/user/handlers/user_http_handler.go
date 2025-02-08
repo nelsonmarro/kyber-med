@@ -69,7 +69,7 @@ func (h *userHttpHandler) Login(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "message": "Success login", "data": dtos.LoginResponseDTO{
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "message": "Inicio de Sesión Correcto", "data": dtos.LoginResponseDTO{
 		Token: token,
 	}})
 }
