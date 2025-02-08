@@ -15,6 +15,7 @@ import (
 	"github.com/nelsonmarro/kyber-med/config"
 	"github.com/nelsonmarro/kyber-med/internal/database"
 	pEntities "github.com/nelsonmarro/kyber-med/internal/pacient/entities"
+	uEntities "github.com/nelsonmarro/kyber-med/internal/user/entities"
 )
 
 func main() {
@@ -41,30 +42,30 @@ func pacientsSeed(db database.Database) {
 		return
 	}
 
+	result := db.GetDb().First(&uEntities.User{})
+
 	pacients := make([]pEntities.Pacient, 0)
 
-	for i := 0; i < 10; i++ {
-		date = date.Add(-time.Duration(21-i) * time.Hour)
-		pacients = append(pacients, pEntities.Pacient{
-			BaseEntity:            commonentities.BaseEntity{},
-			FirstName:             fmt.Sprintf("Paciente %d", i),
-			LastName:              fmt.Sprintf("Last %d", i),
-			Email:                 fmt.Sprintf("nelsonmarro%d@gmail.com", i),
-			IDCard:                strconv.Itoa(rand.Intn(99999)),
-			PhoneNumber:           "0985134196",
-			DateOfBirth:           date,
-			Gender:                "Masculino",
-			Address:               "Quito",
-			EmergencyContactName:  "Alieen Torres",
-			EmergencyContactPhone: "0999079590",
-		})
-	}
+	date = date.Add(-time.Duration(21-1) * time.Hour)
+	pacients = append(pacients, pEntities.Pacient{
+		BaseEntity:            commonentities.BaseEntity{},
+		FirstName:             fmt.Sprintf("Paciente %d", 1),
+		LastName:              fmt.Sprintf("Last %d", 1),
+		Email:                 fmt.Sprintf("nelsonmarro%d@gmail.com", 1),
+		IDCard:                strconv.Itoa(rand.Intn(99999)),
+		PhoneNumber:           "0985134196",
+		DateOfBirth:           date,
+		Gender:                "Masculino",
+		Address:               "Quito",
+		EmergencyContactName:  "Alieen Torres",
+		EmergencyContactPhone: "0999079590",
+	})
 
 	db.GetDb().AutoMigrate(pEntities.Pacient{})
 
 	var pacient pEntities.Pacient
 	result := db.GetDb().First(&pacient)
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		db.GetDb().CreateInBatches(pacients, 10)
+		db.GetDb().CreateInBatches(pacients, 1)
 	}
 }
