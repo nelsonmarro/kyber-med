@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"os"
 	"strconv"
 	"time"
 
@@ -17,13 +18,23 @@ import (
 )
 
 func main() {
+	args := os.Args[1:] // Obtener los argumentos pasados por consola
+
 	conf := config.LoadConfig("config")
 	db := database.NewDatabase(conf)
 
-	pacientMigrate(db)
+	if len(args) > 0 && args[0] == "--migrate" {
+		migrateTables(db)
+	} else if len(args) > 0 && args[0] == "--seed" {
+		pacientsSeed(db)
+	}
 }
 
-func pacientMigrate(db database.Database) {
+func migrateTables(db database.Database) {
+	db.GetDb().AutoMigrate(&entities.Pacient{})
+}
+
+func pacientsSeed(db database.Database) {
 	date, err := time.Parse("2006-01-02", "1999-01-09")
 	if err != nil {
 		log.Error("error al parsear la fecha")
@@ -46,6 +57,7 @@ func pacientMigrate(db database.Database) {
 			Address:               "Quito",
 			EmergencyContactName:  "Alieen Torres",
 			EmergencyContactPhone: "0999079590",
+			User:                  entities.User,
 		})
 	}
 

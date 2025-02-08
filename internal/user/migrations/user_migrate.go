@@ -23,7 +23,7 @@ func main() {
 	if len(args) > 0 && args[0] == "--migrate" {
 		migrateTables(db)
 	} else if len(args) > 0 && args[0] == "--seed" {
-		pacientSeed(db)
+		usersSeed(db)
 	}
 }
 
@@ -31,7 +31,7 @@ func migrateTables(db database.Database) {
 	db.GetDb().AutoMigrate(&entities.User{})
 }
 
-func pacientSeed(db database.Database) {
+func usersSeed(db database.Database) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("123456"), bcrypt.DefaultCost)
 	if err != nil {
 		log.Error("error encryptar password")
