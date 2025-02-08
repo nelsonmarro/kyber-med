@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"math/rand"
 	"os"
@@ -9,7 +8,6 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2/log"
-	"gorm.io/gorm"
 
 	commonentities "github.com/nelsonmarro/kyber-med/common/commonentities"
 	"github.com/nelsonmarro/kyber-med/config"
@@ -42,12 +40,11 @@ func pacientsSeed(db database.Database) {
 		return
 	}
 
-	result := db.GetDb().First(&uEntities.User{})
-
-	pacients := make([]pEntities.Pacient, 0)
+	var user uEntities.User
+	_ = db.GetDb().First(&user)
 
 	date = date.Add(-time.Duration(21-1) * time.Hour)
-	pacients = append(pacients, pEntities.Pacient{
+	pacient := pEntities.Pacient{
 		BaseEntity:            commonentities.BaseEntity{},
 		FirstName:             fmt.Sprintf("Paciente %d", 1),
 		LastName:              fmt.Sprintf("Last %d", 1),
@@ -59,13 +56,9 @@ func pacientsSeed(db database.Database) {
 		Address:               "Quito",
 		EmergencyContactName:  "Alieen Torres",
 		EmergencyContactPhone: "0999079590",
-	})
-
-	db.GetDb().AutoMigrate(pEntities.Pacient{})
-
-	var pacient pEntities.Pacient
-	result := db.GetDb().First(&pacient)
-	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		db.GetDb().CreateInBatches(pacients, 1)
+		User:                  user,
 	}
+
+	db.GetDb().Migrator().DropTable(&pEntities.Pacient{})
+	db.GetDb().Create(pacient)
 }
