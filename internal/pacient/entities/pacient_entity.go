@@ -19,5 +19,6 @@ type Pacient struct {
 	Address               string         `gorm:"type:varchar(350)"`
 	EmergencyContactName  string         `gorm:"type:varchar(100)"`
 	EmergencyContactPhone string         `gorm:"type:varchar(15)"`
-	User                  uEntities.User `gorm:"foreignKey:ID"`
+	UserID                string         `gorm:"type:uuid;not null"`
+	User                  uEntities.User `gorm:"foreignKey:UserID;references:ID"`
 }
