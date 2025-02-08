@@ -1,4 +1,4 @@
-package repositories
+package pacient
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ import (
 
 	commonentities "github.com/nelsonmarro/kyber-med/common/commonentities"
 	"github.com/nelsonmarro/kyber-med/common/commonhelpers"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/entities"
+	entities "github.com/nelsonmarro/kyber-med/internal/pacient/entities"
 )
 
 type inMemoryDB struct {

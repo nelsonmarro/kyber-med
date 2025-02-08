@@ -1,4 +1,4 @@
-package entities
+package pacient
 
 import (
 	"time"

@@ -1,4 +1,4 @@
-package services
+package pacient
 
 import (
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"

@@ -1,4 +1,4 @@
-package repositories
+package pacient
 
 import (
 	"fmt"
@@ -6,7 +6,6 @@ import (
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"
 	"github.com/nelsonmarro/kyber-med/common/commonhelpers"
 	"github.com/nelsonmarro/kyber-med/internal/database"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/entities"
 )
 
 type pacientRepository struct {
@@ -17,10 +16,10 @@ func NewPacientRepository(db database.Database) PacientRepository {
 	return &pacientRepository{db: db}
 }
 
-func (r *pacientRepository) FindByCursor(cursor string, limit int, sortOrder string) (data []entities.Pacient, pagination commondtos.PaginationInfo, err error) {
+func (r *pacientRepository) FindByCursor(cursor string, limit int, sortOrder string) (data []Pacient, pagination commondtos.PaginationInfo, err error) {
 	// build base query
 	db := r.db.GetDb()
-	query := db.Model(&entities.Pacient{})
+	query := db.Model(&Pacient{})
 
 	isFirstPage := cursor == ""
 	pointsNext := false

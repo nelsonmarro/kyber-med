@@ -1,4 +1,4 @@
-package handlers
+package pacient
 
 import (
 	"encoding/json"
@@ -11,14 +11,11 @@ import (
 	"github.com/stretchr/testify/suite"
 
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/dtos"
-
-	"github.com/nelsonmarro/kyber-med/internal/pacient/services"
 )
 
 type PacientHttpHandlerTestSuite struct {
 	suite.Suite
-	pacients   []dtos.PacientDto
+	pacients   []PacientDto
 	pagination commondtos.PaginationInfo
 	fiberApp   fiber.App
 	router     fiber.Router
@@ -33,7 +30,7 @@ func (suite *PacientHttpHandlerTestSuite) setupFiberServer() {
 func (suite *PacientHttpHandlerTestSuite) SetupTest() {
 	suite.setupFiberServer()
 
-	suite.pacients = []dtos.PacientDto{
+	suite.pacients = []PacientDto{
 		{
 			BaseDto: commondtos.BaseDto{
 				ID:        "p1",
@@ -61,7 +58,7 @@ func (suite *PacientHttpHandlerTestSuite) SetupTest() {
 }
 
 func (suite *PacientHttpHandlerTestSuite) TestGetPacientsByCursor_Success() {
-	mockService := services.NewMockPacientService(suite.T())
+	mockService := NewMockPacientService(suite.T())
 
 	mockService.EXPECT().GetPacientsByCursor("someCursor", 5, "asc").Return(suite.pacients, suite.pagination, nil)
 

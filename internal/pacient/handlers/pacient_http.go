@@ -1,4 +1,4 @@
-package handlers
+package pacient
 
 import (
 	"strconv"
@@ -6,15 +6,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"github.com/nelsonmarro/kyber-med/common/commondtos"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/dtos"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/services"
 )
 
 type pacientHttpHandler struct {
-	pacientService services.PacientService
+	pacientService PacientService
 }
 
-func NewPacientHttpHandler(pacientService services.PacientService) PacientHandler {
+func NewPacientHttpHandler(pacientService PacientService) PacientHandler {
 	return &pacientHttpHandler{
 		pacientService: pacientService,
 	}

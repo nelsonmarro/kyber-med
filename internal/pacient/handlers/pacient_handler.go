@@ -1,4 +1,4 @@
-package handlers
+package pacient
 
 import "github.com/gofiber/fiber/v2"
 
