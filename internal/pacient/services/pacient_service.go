@@ -5,5 +5,5 @@ import (
 )
 
 type PacientService interface {
-	GetPacientsByCursor(cursor string, limit int, sortOrder string) ([]PacientDto, commondtos.PaginationInfo, error)
+	GetPacientsByCursor(cursor string, limit int, sortOrder string) ([]pDtos.PacientDto, commondtos.PaginationInfo, error)
 }

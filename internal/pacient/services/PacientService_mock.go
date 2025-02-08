@@ -23,24 +23,24 @@ func (_m *MockPacientService) EXPECT() *MockPacientService_Expecter {
 }
 
 // GetPacientsByCursor provides a mock function with given fields: cursor, limit, sortOrder
-func (_m *MockPacientService) GetPacientsByCursor(cursor string, limit int, sortOrder string) ([]dtos.PacientDto, commondtos.PaginationInfo, error) {
+func (_m *MockPacientService) GetPacientsByCursor(cursor string, limit int, sortOrder string) ([]dtos.pDtos.PacientDto, commondtos.PaginationInfo, error) {
 	ret := _m.Called(cursor, limit, sortOrder)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetPacientsByCursor")
 	}
 
-	var r0 []dtos.PacientDto
+	var r0 []dtos.pDtos.PacientDto
 	var r1 commondtos.PaginationInfo
 	var r2 error
-	if rf, ok := ret.Get(0).(func(string, int, string) ([]dtos.PacientDto, commondtos.PaginationInfo, error)); ok {
+	if rf, ok := ret.Get(0).(func(string, int, string) ([]dtos.pDtos.PacientDto, commondtos.PaginationInfo, error)); ok {
 		return rf(cursor, limit, sortOrder)
 	}
-	if rf, ok := ret.Get(0).(func(string, int, string) []dtos.PacientDto); ok {
+	if rf, ok := ret.Get(0).(func(string, int, string) []dtos.pDtos.PacientDto); ok {
 		r0 = rf(cursor, limit, sortOrder)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]dtos.PacientDto)
+			r0 = ret.Get(0).([]dtos.pDtos.PacientDto)
 		}
 	}
 
@@ -79,12 +79,12 @@ func (_c *MockPacientService_GetPacientsByCursor_Call) Run(run func(cursor strin
 	return _c
 }
 
-func (_c *MockPacientService_GetPacientsByCursor_Call) Return(_a0 []dtos.PacientDto, _a1 commondtos.PaginationInfo, _a2 error) *MockPacientService_GetPacientsByCursor_Call {
+func (_c *MockPacientService_GetPacientsByCursor_Call) Return(_a0 []dtos.pDtos.PacientDto, _a1 commondtos.PaginationInfo, _a2 error) *MockPacientService_GetPacientsByCursor_Call {
 	_c.Call.Return(_a0, _a1, _a2)
 	return _c
 }
 
-func (_c *MockPacientService_GetPacientsByCursor_Call) RunAndReturn(run func(string, int, string) ([]dtos.PacientDto, commondtos.PaginationInfo, error)) *MockPacientService_GetPacientsByCursor_Call {
+func (_c *MockPacientService_GetPacientsByCursor_Call) RunAndReturn(run func(string, int, string) ([]dtos.pDtos.PacientDto, commondtos.PaginationInfo, error)) *MockPacientService_GetPacientsByCursor_Call {
 	_c.Call.Return(run)
 	return _c
 }

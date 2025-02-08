@@ -2,7 +2,7 @@ package pacient
 
 import "time"
 
-type UpsertPacientDto struct {
+type UpsertpDtos.PacientDto struct {
 	FirstName             string    `json:"firstName"`
 	LastName              string    `json:"lastName"`
 	Email                 string    `json:"email"`

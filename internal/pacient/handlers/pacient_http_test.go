@@ -11,11 +11,13 @@ import (
 	"github.com/stretchr/testify/suite"
 
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"
+	pDtos "github.com/nelsonmarro/kyber-med/internal/pacient/dtos"
+	pService "github.com/nelsonmarro/kyber-med/internal/pacient/services"
 )
 
 type PacientHttpHandlerTestSuite struct {
 	suite.Suite
-	pacients   []PacientDto
+	pacients   []pDtos.PacientDto
 	pagination commondtos.PaginationInfo
 	fiberApp   fiber.App
 	router     fiber.Router
@@ -30,7 +32,7 @@ func (suite *PacientHttpHandlerTestSuite) setupFiberServer() {
 func (suite *PacientHttpHandlerTestSuite) SetupTest() {
 	suite.setupFiberServer()
 
-	suite.pacients = []PacientDto{
+	suite.pacients = []pDtos.PacientDto{
 		{
 			BaseDto: commondtos.BaseDto{
 				ID:        "p1",
@@ -58,7 +60,7 @@ func (suite *PacientHttpHandlerTestSuite) SetupTest() {
 }
 
 func (suite *PacientHttpHandlerTestSuite) TestGetPacientsByCursor_Success() {
-	mockService := NewMockPacientService(suite.T())
+	mockService := pService.NewMockPacientService(suite.T())
 
 	mockService.EXPECT().GetPacientsByCursor("someCursor", 5, "asc").Return(suite.pacients, suite.pagination, nil)
 
@@ -79,7 +81,7 @@ func (suite *PacientHttpHandlerTestSuite) TestGetPacientsByCursor_Success() {
 	// parse the resp
 	var response struct {
 		Success    bool                      `json:"success"`
-		Data       []dtos.PacientDto         `json:"data"`
+		Data       []pDtos.PacientDto        `json:"data"`
 		Pagination commondtos.PaginationInfo `json:"pagination"`
 	}
 	err = json.NewDecoder(resp.Body).Decode(&response)
@@ -97,7 +99,7 @@ func (suite *PacientHttpHandlerTestSuite) TestGetPacientsByCursor_Success() {
 }
 
 func (suite *PacientHttpHandlerTestSuite) TestGetPacientsByCursor_ServiceError() {
-	mockService := NewMockPacientService(suite.T())
+	mockService := pService.NewMockPacientService(suite.T())
 
 	mockService.EXPECT().GetPacientsByCursor("", 10, "asc").Return(nil, commondtos.PaginationInfo{}, fmt.Errorf("some error from service"))
 

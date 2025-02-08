@@ -39,7 +39,7 @@ func (h *pacientHttpHandler) GetPacientsByCursor(c *fiber.Ctx) error {
 	}
 
 	// Construir respuesta strongly typed
-	resp := commondtos.ResponseDTO[pDtos.PacientDto]{
+	resp := commondtos.ResponseDTO[pDtos.pDtos.PacientDto]{
 		Success:    true,
 		Data:       pacientes,
 		Pagination: pagination,

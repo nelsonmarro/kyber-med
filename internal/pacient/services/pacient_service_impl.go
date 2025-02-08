@@ -14,7 +14,7 @@ func NewPacientService(pacientRepository PacientRepository) PacientService {
 	}
 }
 
-func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortOrder string) ([]PacientDto, commondtos.PaginationInfo, error) {
+func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortOrder string) ([]pDtos.PacientDto, commondtos.PaginationInfo, error) {
 	if limit < 1 || limit > 100 {
 		limit = 10
 	}
@@ -24,9 +24,9 @@ func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortO
 
 	pacientSliceDd, pagination, err := s.pacientRepository.FindByCursor(cursor, limit, sortOrder)
 
-	var pacientSliceDto []PacientDto
+	var pacientSliceDto []pDtos.PacientDto
 	for _, pacient := range pacientSliceDd {
-		pacientSliceDto = append(pacientSliceDto, PacientDto{
+		pacientSliceDto = append(pacientSliceDto, pDtos.PacientDto{
 			BaseDto:               commondtos.BaseDto{ID: pacient.ID, CreatedAt: pacient.CreatedAt},
 			FirstName:             pacient.FirstName,
 			LastName:              pacient.LastName,

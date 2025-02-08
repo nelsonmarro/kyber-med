@@ -6,7 +6,7 @@ import (
 	"github.com/nelsonmarro/kyber-med/common/commondtos"
 )
 
-type PacientDto struct {
+type pDtos.PacientDto struct {
 	commondtos.BaseDto
 	FirstName             string    `json:"firstName"`
 	LastName              string    `json:"lastName"`
