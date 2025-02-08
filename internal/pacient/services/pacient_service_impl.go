@@ -2,13 +2,15 @@ package pacient
 
 import (
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"
+	pDtos "github.com/nelsonmarro/kyber-med/internal/pacient/dtos"
+	pRepo "github.com/nelsonmarro/kyber-med/internal/pacient/repositories"
 )
 
 type pacientServiceImpl struct {
-	pacientRepository PacientRepository
+	pacientRepository pRepo.PacientRepository
 }
 
-func NewPacientService(pacientRepository PacientRepository) PacientService {
+func NewPacientService(pacientRepository pRepo.PacientRepository) PacientService {
 	return &pacientServiceImpl{
 		pacientRepository: pacientRepository,
 	}

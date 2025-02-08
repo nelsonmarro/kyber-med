@@ -2,6 +2,7 @@ package pacient
 
 import (
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"
+	pDtos "github.com/nelsonmarro/kyber-med/internal/pacient/dtos"
 )
 
 type PacientService interface {
