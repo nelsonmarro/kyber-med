@@ -97,7 +97,7 @@ func (suite *PacientHttpHandlerTestSuite) TestGetPacientsByCursor_Success() {
 }
 
 func (suite *PacientHttpHandlerTestSuite) TestGetPacientsByCursor_ServiceError() {
-	mockService := services.NewMockPacientService(suite.T())
+	mockService := NewMockPacientService(suite.T())
 
 	mockService.EXPECT().GetPacientsByCursor("", 10, "asc").Return(nil, commondtos.PaginationInfo{}, fmt.Errorf("some error from service"))
 
