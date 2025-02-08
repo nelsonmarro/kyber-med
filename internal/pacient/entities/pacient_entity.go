@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/nelsonmarro/kyber-med/common/commonentities"
+	"github.com/nelsonmarro/kyber-med/internal/user/entities"
 )
 
 type Pacient struct {
@@ -18,4 +19,5 @@ type Pacient struct {
 	Address               string    `gorm:"type:varchar(350)"`
 	EmergencyContactName  string    `gorm:"type:varchar(100)"`
 	EmergencyContactPhone string    `gorm:"type:varchar(15)"`
+	User                  entities.User
 }
