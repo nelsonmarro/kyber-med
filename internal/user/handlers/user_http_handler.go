@@ -7,21 +7,21 @@ import (
 	"github.com/nelsonmarro/kyber-med/common/commonhelpers"
 	"github.com/nelsonmarro/kyber-med/common/commonhelpers/jwthelpers"
 	"github.com/nelsonmarro/kyber-med/config"
-	"github.com/nelsonmarro/kyber-med/internal/user/dtos"
-	"github.com/nelsonmarro/kyber-med/internal/user/services"
+	uDtos "github.com/nelsonmarro/kyber-med/internal/user/dtos"
+	uServices "github.com/nelsonmarro/kyber-med/internal/user/services"
 )
 
 type userHttpHandler struct {
-	userService services.UserService
+	userService uServices.UserService
 	conf        *config.Config
 }
 
-func NewUserHttpHandler(userService services.UserService, conf *config.Config) UserHandler {
+func NewUserHttpHandler(userService uServices.UserService, conf *config.Config) UserHandler {
 	return &userHttpHandler{userService: userService, conf: conf}
 }
 
 func (h *userHttpHandler) Register(c *fiber.Ctx) error {
-	var req dtos.UserRegisterDTO
+	var req uDtos.UserRegisterDTO
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": err.Error(),
@@ -41,12 +41,12 @@ func (h *userHttpHandler) Register(c *fiber.Ctx) error {
 }
 
 func (h *userHttpHandler) Login(c *fiber.Ctx) error {
-	var loginInput dtos.UserLoginDTO
+	var loginInput uDtos.UserLoginDTO
 	if err := c.BodyParser(&loginInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Error on login request", "errors": err.Error()})
 	}
 
-	user, pass, err := new(dtos.UserDTO), *new(string), *new(error)
+	user, pass, err := new(uDtos.UserDTO), *new(string), *new(error)
 
 	if commonhelpers.IsEmailValid(loginInput.Identity) {
 		user, pass, err = h.userService.GetUserWithPasswordByEmail(loginInput.Identity)
@@ -69,7 +69,7 @@ func (h *userHttpHandler) Login(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "message": "Inicio de Sesión Correcto", "data": dtos.LoginResponseDTO{
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "message": "Inicio de Sesión Correcto", "data": uDtos.LoginResponseDTO{
 		Token: token,
 	}})
 }
@@ -87,7 +87,7 @@ func (h *userHttpHandler) GetUserByID(c *fiber.Ctx) error {
 func (h *userHttpHandler) UpdateUser(c *fiber.Ctx) error {
 	id := c.Params("id")
 	token := c.Locals("user").(*jwt.Token)
-	var userUpdate dtos.UserUpdateDTO
+	var userUpdate uDtos.UserUpdateDTO
 
 	if !jwthelpers.ValidToken(token, id) {
 		c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Invalid token id", "data": nil})

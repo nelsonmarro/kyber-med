@@ -1,4 +1,4 @@
-package constanst
+package user
 
 type UserRole string
 

@@ -1,4 +1,4 @@
-package dtos
+package user
 
 type UserLoginDTO struct {
 	Identity string `json:"identity"`

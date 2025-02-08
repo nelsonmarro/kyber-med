@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"github.com/nelsonmarro/kyber-med/common/commondtos"
+	pDtos "github.com/nelsonmarro/kyber-med/internal/pacient/dtos"
 	pService "github.com/nelsonmarro/kyber-med/internal/pacient/services"
 )
 
@@ -38,7 +39,7 @@ func (h *pacientHttpHandler) GetPacientsByCursor(c *fiber.Ctx) error {
 	}
 
 	// Construir respuesta strongly typed
-	resp := commondtos.ResponseDTO[pDtos.pDtos.PacientDto]{
+	resp := commondtos.ResponseDTO[pDtos.PacientDto]{
 		Success:    true,
 		Data:       pacientes,
 		Pagination: pagination,
