@@ -10,8 +10,8 @@ import (
 
 	"github.com/nelsonmarro/kyber-med/config"
 	"github.com/nelsonmarro/kyber-med/internal/database"
-	"github.com/nelsonmarro/kyber-med/internal/user/constanst"
-	"github.com/nelsonmarro/kyber-med/internal/user/entities"
+	uConstant "github.com/nelsonmarro/kyber-med/internal/user/constanst"
+	uEntities "github.com/nelsonmarro/kyber-med/internal/user/entities"
 )
 
 func main() {
@@ -28,7 +28,7 @@ func main() {
 }
 
 func migrateTables(db database.Database) {
-	db.GetDb().AutoMigrate(&entities.User{})
+	db.GetDb().AutoMigrate(&uEntities.User{})
 }
 
 func usersSeed(db database.Database) {
@@ -38,24 +38,24 @@ func usersSeed(db database.Database) {
 		return
 	}
 
-	user := entities.User{
+	user := uEntities.User{
 		Name:     "Nelson Marro",
 		Email:    "nelsonmarro99@gmail.com",
-		Role:     constanst.RoleUser,
+		Role:     uConstant.RoleUser,
 		IDCard:   strconv.Itoa(rand.Intn(99999)),
 		Password: string(hashedPassword),
 	}
 
-	admin := entities.User{
+	admin := uEntities.User{
 		Name:     "Admin",
 		Email:    "admin99@gmail.com",
-		Role:     constanst.RoleAdmin,
+		Role:     uConstant.RoleAdmin,
 		IDCard:   strconv.Itoa(rand.Intn(99999)),
 		Password: string(hashedPassword),
 	}
 
-	db.GetDb().Migrator().DropTable(entities.User{})
-	db.GetDb().Migrator().CreateTable(entities.User{})
+	db.GetDb().Migrator().DropTable(uEntities.User{})
+	db.GetDb().Migrator().CreateTable(uEntities.User{})
 	db.GetDb().Create(&user)
 	db.GetDb().Create(&admin)
 }

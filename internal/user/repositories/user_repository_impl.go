@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"github.com/nelsonmarro/kyber-med/internal/database"
-	"github.com/nelsonmarro/kyber-med/internal/user/entities"
+	uEntities "github.com/nelsonmarro/kyber-med/internal/user/entities"
 )
 
 type userRepositoryImpl struct {
@@ -13,30 +13,30 @@ func NewUserRepository(db database.Database) UserRepository {
 	return &userRepositoryImpl{db: db}
 }
 
-func (r *userRepositoryImpl) GetUserByEmail(email string) (*entities.User, error) {
+func (r *userRepositoryImpl) GetUserByEmail(email string) (*uEntities.User, error) {
 	db := r.db.GetDb()
 
-	var user entities.User
+	var user uEntities.User
 	if err := db.Where("email = ?", email).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
 }
 
-func (r *userRepositoryImpl) GetUserByIDCard(idCard string) (*entities.User, error) {
+func (r *userRepositoryImpl) GetUserByIDCard(idCard string) (*uEntities.User, error) {
 	db := r.db.GetDb()
 
-	var user entities.User
-	if err := db.Where(&entities.User{Email: idCard}).First(&user).Error; err != nil {
+	var user uEntities.User
+	if err := db.Where(&uEntities.User{Email: idCard}).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
 }
 
-func (r *userRepositoryImpl) GetUserByID(id string) (*entities.User, error) {
+func (r *userRepositoryImpl) GetUserByID(id string) (*uEntities.User, error) {
 	db := r.db.GetDb()
 
-	var user entities.User
+	var user uEntities.User
 	result := db.First(&user, id)
 	if result.Error != nil {
 		return nil, result.Error
@@ -45,7 +45,7 @@ func (r *userRepositoryImpl) GetUserByID(id string) (*entities.User, error) {
 	return &user, nil
 }
 
-func (r *userRepositoryImpl) Save(user *entities.User) error {
+func (r *userRepositoryImpl) Save(user *uEntities.User) error {
 	db := r.db.GetDb()
 	result := db.Save(user)
 	if result.Error != nil {
@@ -55,7 +55,7 @@ func (r *userRepositoryImpl) Save(user *entities.User) error {
 	return nil
 }
 
-func (r *userRepositoryImpl) DeleteUser(user *entities.User) error {
+func (r *userRepositoryImpl) DeleteUser(user *uEntities.User) error {
 	db := r.db.GetDb()
 
 	result := db.Delete(user)

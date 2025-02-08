@@ -1,13 +1,13 @@
 package repositories
 
 import (
-	"github.com/nelsonmarro/kyber-med/internal/user/entities"
+	uEntities "github.com/nelsonmarro/kyber-med/internal/user/entities"
 )
 
 type UserRepository interface {
-	GetUserByID(id string) (*entities.User, error)
-	GetUserByEmail(email string) (*entities.User, error)
-	GetUserByIDCard(idCard string) (*entities.User, error)
-	Save(user *entities.User) error
-	DeleteUser(user *entities.User) error
+	GetUserByID(id string) (*uEntities.User, error)
+	GetUserByEmail(email string) (*uEntities.User, error)
+	GetUserByIDCard(idCard string) (*uEntities.User, error)
+	Save(user *uEntities.User) error
+	DeleteUser(user *uEntities.User) error
 }

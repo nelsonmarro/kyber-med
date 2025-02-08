@@ -1,4 +1,4 @@
-package services
+package user
 
 import (
 	"github.com/nelsonmarro/kyber-med/common/commondtos"

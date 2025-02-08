@@ -1,6 +1,6 @@
-package services
+package user
 
-import "github.com/nelsonmarro/kyber-med/internal/user/dtos"
+uDtos import "github.com/nelsonmarro/kyber-med/internal/user/dtos"
 
 type UserService interface {
 	RegisterUser(userDto dtos.UserRegisterDTO) error
