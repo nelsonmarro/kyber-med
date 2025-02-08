@@ -2,21 +2,19 @@ package pacient
 
 import (
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/dtos"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/repositories"
 )
 
 type pacientServiceImpl struct {
-	pacientRepository repositories.PacientRepository
+	pacientRepository PacientRepository
 }
 
-func NewPacientService(pacientRepository repositories.PacientRepository) PacientService {
+func NewPacientService(pacientRepository PacientRepository) PacientService {
 	return &pacientServiceImpl{
 		pacientRepository: pacientRepository,
 	}
 }
 
-func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortOrder string) ([]dtos.PacientDto, commondtos.PaginationInfo, error) {
+func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortOrder string) ([]PacientDto, commondtos.PaginationInfo, error) {
 	if limit < 1 || limit > 100 {
 		limit = 10
 	}
@@ -26,9 +24,9 @@ func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortO
 
 	pacientSliceDd, pagination, err := s.pacientRepository.FindByCursor(cursor, limit, sortOrder)
 
-	var pacientSliceDto []dtos.PacientDto
+	var pacientSliceDto []PacientDto
 	for _, pacient := range pacientSliceDd {
-		pacientSliceDto = append(pacientSliceDto, dtos.PacientDto{
+		pacientSliceDto = append(pacientSliceDto, PacientDto{
 			BaseDto:               commondtos.BaseDto{ID: pacient.ID, CreatedAt: pacient.CreatedAt},
 			FirstName:             pacient.FirstName,
 			LastName:              pacient.LastName,

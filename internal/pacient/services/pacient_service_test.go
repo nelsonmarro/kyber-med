@@ -10,18 +10,16 @@ import (
 
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"
 	commonentities "github.com/nelsonmarro/kyber-med/common/commonentities"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/entities"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/repositories"
 )
 
 type PacientServiceTestSuite struct {
 	suite.Suite
-	pacients   []entities.Pacient
+	pacients   []Pacient
 	pagination commondtos.PaginationInfo
 }
 
 func (suite *PacientServiceTestSuite) SetupTest() {
-	suite.pacients = []entities.Pacient{
+	suite.pacients = []Pacient{
 		{
 			BaseEntity: commonentities.BaseEntity{
 				ID:        "p1",
@@ -50,7 +48,7 @@ func (suite *PacientServiceTestSuite) SetupTest() {
 
 func (suite *PacientServiceTestSuite) TestGetPacientsByCursor_Success() {
 	// crear el mock
-	mockRepo := repositories.NewMockPacientRepository(suite.T())
+	mockRepo := NewMockPacientRepository(suite.T())
 
 	// instanciar el servicio con el mock
 	svc := NewPacientService(mockRepo)
@@ -77,12 +75,12 @@ func (suite *PacientServiceTestSuite) TestGetPacientsByCursor_Success() {
 }
 
 func (suite *PacientServiceTestSuite) TestGetPacientsByCursor_Error() {
-	mockRepo := repositories.NewMockPacientRepository(suite.T())
+	mockRepo := NewMockPacientRepository(suite.T())
 
 	// instanciar el servicio con el mock
 	svc := NewPacientService(mockRepo)
 
-	mockRepo.EXPECT().FindByCursor("", 10, "asc").Return([]entities.Pacient{}, commondtos.PaginationInfo{}, errors.New("error to fetch pacients"))
+	mockRepo.EXPECT().FindByCursor("", 10, "asc").Return([]Pacient{}, commondtos.PaginationInfo{}, errors.New("error to fetch pacients"))
 
 	// llamar al servicio
 	dtos, pagination, err := svc.GetPacientsByCursor("", 10, "asc")
