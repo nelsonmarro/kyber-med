@@ -3,28 +3,28 @@ package user
 import (
 	"github.com/nelsonmarro/kyber-med/common/commondtos"
 	"github.com/nelsonmarro/kyber-med/common/commonhelpers"
-	"github.com/nelsonmarro/kyber-med/internal/user/dtos"
-	"github.com/nelsonmarro/kyber-med/internal/user/entities"
-	"github.com/nelsonmarro/kyber-med/internal/user/repositories"
+	uDtos "github.com/nelsonmarro/kyber-med/internal/user/dtos"
+	uEntities "github.com/nelsonmarro/kyber-med/internal/user/entities"
+	uRepo "github.com/nelsonmarro/kyber-med/internal/user/repositories"
 )
 
 type userService struct {
-	userRepository repositories.UserRepository
+	userRepository uRepo.UserRepository
 }
 
-func NewUserService(userRepository repositories.UserRepository) UserService {
+func NewUserService(userRepository uRepo.UserRepository) UserService {
 	return &userService{
 		userRepository: userRepository,
 	}
 }
 
-func (s *userService) GetUserById(id string) (*dtos.UserDTO, error) {
+func (s *userService) GetUserById(id string) (*uDtos.UserDTO, error) {
 	dbUser, error := s.userRepository.GetUserByID(id)
 	if error != nil {
 		return nil, error
 	}
 
-	return &dtos.UserDTO{
+	return &uDtos.UserDTO{
 		BaseDto: commondtos.BaseDto{
 			ID:        dbUser.ID,
 			CreatedAt: dbUser.CreatedAt,
@@ -35,13 +35,13 @@ func (s *userService) GetUserById(id string) (*dtos.UserDTO, error) {
 	}, nil
 }
 
-func (s *userService) GetUserWithPasswordByEmail(email string) (*dtos.UserDTO, string, error) {
+func (s *userService) GetUserWithPasswordByEmail(email string) (*uDtos.UserDTO, string, error) {
 	dbUser, error := s.userRepository.GetUserByEmail(email)
 	if error != nil {
 		return nil, "", error
 	}
 
-	return &dtos.UserDTO{
+	return &uDtos.UserDTO{
 		BaseDto: commondtos.BaseDto{
 			ID:        dbUser.ID,
 			CreatedAt: dbUser.CreatedAt,
@@ -53,13 +53,13 @@ func (s *userService) GetUserWithPasswordByEmail(email string) (*dtos.UserDTO, s
 	}, dbUser.Password, nil
 }
 
-func (s *userService) GetUserWithPassswordByIDCard(idCard string) (*dtos.UserDTO, string, error) {
+func (s *userService) GetUserWithPassswordByIDCard(idCard string) (*uDtos.UserDTO, string, error) {
 	dbUser, error := s.userRepository.GetUserByIDCard(idCard)
 	if error != nil {
 		return nil, "", error
 	}
 
-	return &dtos.UserDTO{
+	return &uDtos.UserDTO{
 		BaseDto: commondtos.BaseDto{
 			ID:        dbUser.ID,
 			CreatedAt: dbUser.CreatedAt,
@@ -79,13 +79,13 @@ func (s *userService) ValidUser(id string, password string) bool {
 	return commonhelpers.CheckPasswordHash(user.Password, password)
 }
 
-func (s *userService) RegisterUser(userDto dtos.UserRegisterDTO) error {
+func (s *userService) RegisterUser(userDto uDtos.UserRegisterDTO) error {
 	usrPwd, err := commonhelpers.GeneratePassword(userDto.Password)
 	if err != nil {
 		return err
 	}
 
-	userDb := entities.User{
+	userDb := uEntities.User{
 		IDCard:   userDto.IDCard,
 		Email:    userDto.Email,
 		Role:     userDto.Role,
@@ -100,7 +100,7 @@ func (s *userService) RegisterUser(userDto dtos.UserRegisterDTO) error {
 	return nil
 }
 
-func (s *userService) UpdateUser(userDto dtos.UserUpdateDTO, id string) error {
+func (s *userService) UpdateUser(userDto uDtos.UserUpdateDTO, id string) error {
 	dbUser, err := s.userRepository.GetUserByID(id)
 	if err != nil {
 		return err
