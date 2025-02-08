@@ -60,5 +60,5 @@ func pacientsSeed(db database.Database) {
 	}
 
 	db.GetDb().Migrator().DropTable(&pEntities.Pacient{})
-	db.GetDb().Create(pacient)
+	db.GetDb().Create(&pacient)
 }
