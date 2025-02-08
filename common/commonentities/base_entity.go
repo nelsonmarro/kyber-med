@@ -8,7 +8,6 @@ import (
 )
 
 type BaseEntity struct {
-	gorm.Model
 	ID        string `gorm:"type:uuid;primary_key;"`
 	CreatedAt int
 	UpdatedAt int
