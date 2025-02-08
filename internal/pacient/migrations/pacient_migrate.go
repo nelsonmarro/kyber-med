@@ -14,6 +14,7 @@ import (
 	commonentities "github.com/nelsonmarro/kyber-med/common/commonentities"
 	"github.com/nelsonmarro/kyber-med/config"
 	"github.com/nelsonmarro/kyber-med/internal/database"
+	pEntities "github.com/nelsonmarro/kyber-med/internal/pacient/entities"
 )
 
 func main() {
@@ -30,7 +31,7 @@ func main() {
 }
 
 func migrateTables(db database.Database) {
-	db.GetDb().AutoMigrate(&Pacient{})
+	db.GetDb().AutoMigrate(&pEntities.Pacient{})
 }
 
 func pacientsSeed(db database.Database) {
@@ -40,11 +41,11 @@ func pacientsSeed(db database.Database) {
 		return
 	}
 
-	pacients := make([]Pacient, 0)
+	pacients := make([]pEntities.Pacient, 0)
 
 	for i := 0; i < 10; i++ {
 		date = date.Add(-time.Duration(21-i) * time.Hour)
-		pacients = append(pacients, Pacient{
+		pacients = append(pacients, pEntities.Pacient{
 			BaseEntity:            commonentities.BaseEntity{},
 			FirstName:             fmt.Sprintf("Paciente %d", i),
 			LastName:              fmt.Sprintf("Last %d", i),
@@ -56,13 +57,12 @@ func pacientsSeed(db database.Database) {
 			Address:               "Quito",
 			EmergencyContactName:  "Alieen Torres",
 			EmergencyContactPhone: "0999079590",
-			User:                  Pser,
 		})
 	}
 
-	db.GetDb().AutoMigrate(&Pacient{})
+	db.GetDb().AutoMigrate(pEntities.Pacient{})
 
-	var pacient Pacient
+	var pacient pEntities.Pacient
 	result := db.GetDb().First(&pacient)
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		db.GetDb().CreateInBatches(pacients, 10)

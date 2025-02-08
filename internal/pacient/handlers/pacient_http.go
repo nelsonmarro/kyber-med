@@ -6,7 +6,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"github.com/nelsonmarro/kyber-med/common/commondtos"
-	pDtos "github.com/nelsonmarro/kyber-med/internal/pacient/dtos"
 	pService "github.com/nelsonmarro/kyber-med/internal/pacient/services"
 )
 

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"
-	"github.com/nelsonmarro/kyber-med/internal/pacient/entities"
+	pEntities "github.com/nelsonmarro/kyber-med/internal/pacient/entities"
 )
 
 func EncodeCursor(cursor *commondtos.Cursor) string {
@@ -56,7 +56,7 @@ func Reverse[T any](arr []T) []T {
 	return arr
 }
 
-func CalculatePagination(isFirstPage bool, hasPagination bool, limit int, data []entities.Pacient, pointsNext bool) commondtos.PaginationInfo {
+func CalculatePagination(isFirstPage bool, hasPagination bool, limit int, data []pEntities.Pacient, pointsNext bool) commondtos.PaginationInfo {
 	pagination := commondtos.PaginationInfo{}
 	nextCur := &commondtos.Cursor{}
 	prevCur := &commondtos.Cursor{}
