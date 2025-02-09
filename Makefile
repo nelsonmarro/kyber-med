@@ -23,7 +23,7 @@ clean-packages: ## Clean packages
 	go clean -modcache
 
 up:
-	$(DOCKER_COMPOSE) up $(APP_SERVICE) --build
+	$(DOCKER_COMPOSE) up $(APP_SERVICE) --build 
 
 down: ## Stop all running containers
 	$(DOCKER_COMPOSE) down
