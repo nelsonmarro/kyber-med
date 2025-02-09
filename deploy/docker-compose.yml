@@ -1,6 +1,5 @@
 services:
   app:
-    network_mode: bridge
     build:
       context: ..
       dockerfile: deploy/Dockerfile

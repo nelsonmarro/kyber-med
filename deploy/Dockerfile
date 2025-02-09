@@ -1,13 +1,13 @@
 ###########################################
 # Construcción (Desarrollo)
 ###########################################
-FROM golang:1.23-alpine AS dev
+FROM golang:1.23.6-alpine AS dev
 
 ENV GOLANG_VERSION 1.23.6
 
 RUN go install github.com/air-verse/air@latest
 
-ENV PATH="/go/bin:${PATH}"
+ENV PATH "/go/bin:${PATH}"
 
 WORKDIR /app
 
@@ -23,7 +23,7 @@ EXPOSE 3000
 ###########################################
 # Construcción (Producción)
 ###########################################
-FROM golang:1.23-alpine AS build
+FROM golang:1.23.6-alpine AS build
 
 ENV GOLANG_VERSION 1.23.5
 

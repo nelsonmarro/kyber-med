@@ -3,7 +3,6 @@ module github.com/nelsonmarro/kyber-med
 go 1.23.6
 
 require (
-	github.com/a-h/templ v0.3.819
 	github.com/gofiber/contrib/jwt v1.0.10
 	github.com/gofiber/fiber/v2 v2.52.6
 	github.com/golang-jwt/jwt/v5 v5.2.1
