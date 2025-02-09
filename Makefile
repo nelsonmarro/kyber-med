@@ -1,6 +1,5 @@
 DOCKER_COMPOSE = docker-compose -f deploy/docker-compose.yml
 APP_SERVICE = app
-GENERATOR_IMAGE = ghcr.io/a-h/templ:latest
 PROJECT_DIR = $(PWD)
 
 .PHONY: help up down build generate dev test clean logs shell
@@ -26,9 +25,7 @@ clean-packages: ## Clean packages
 generate: ## Generate code with Templ
 	docker run --rm \
 		-v $(PWD):/app \
-		-w /app \
-		--user $(shell id -u):$(shell id -g) \
-		$(GENERATOR_IMAGE) generate
+		-w /app 
 
 up: generate ## Run the project in a local container
 	$(DOCKER_COMPOSE) up $(APP_SERVICE) --build
