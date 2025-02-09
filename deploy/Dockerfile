@@ -5,8 +5,7 @@ FROM golang:1.23-alpine AS dev
 
 ENV GOLANG_VERSION 1.23.6
 
-RUN go install github.com/a-h/templ/cmd/templ@latest \
-  && go install github.com/air-verse/air@latest
+RUN go install github.com/air-verse/air@latest
 
 ENV PATH="/go/bin:${PATH}"
 

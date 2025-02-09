@@ -22,12 +22,7 @@ requirements: ## Generate go.mod & go.sum files
 clean-packages: ## Clean packages
 	go clean -modcache
 
-generate: ## Generate code with Templ
-	docker run --rm \
-		-v $(PWD):/app \
-		-w /app 
-
-up: generate ## Run the project in a local container
+up:
 	$(DOCKER_COMPOSE) up $(APP_SERVICE) --build
 
 down: ## Stop all running containers
