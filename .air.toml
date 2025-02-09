@@ -5,7 +5,7 @@ tmp_dir = "tmp"
 [build]
 args_bin = []
 bin = "./tmp/app"
-cmd = "templ generate --notify-proxy && go build -o ./tmp/app ./cmd/kybermed_server"
+cmd = "go build -o ./tmp/app ./cmd/kybermed_server"
 delay = 1000
 exclude_dir = ["assets", "tmp", "vendor", "testdata"]
 exclude_file = []
