@@ -43,7 +43,7 @@ func (s *fiberServer) Start() {
 		TimeZone:   "America/Guayaquil",
 	}))
 
-	s.app.Use(healthcheck.New())
+	s.app.Use(healthcheck.New()
 
 	s.app.Use(cors.New(cors.Config{
 		AllowOrigins: "http://localhost:8100",
