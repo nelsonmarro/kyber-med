@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -58,6 +59,8 @@ func (s *fiberServer) Start() {
 	}))
 
 	jwt := middlewares.NewJwtMiddleware(s.conf.Jwt.Key)
+
+	fmt.Println("jwt", jwt)
 
 	api := s.app.Group("/api")
 	v1 := api.Group("/v1")
