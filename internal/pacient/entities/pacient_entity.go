@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/nelsonmarro/kyber-med/common/commonentities"
+	ActivityLevel "github.com/nelsonmarro/kyber-med/internal/pacient/enums"
 	uEntities "github.com/nelsonmarro/kyber-med/internal/user/entities"
 )
 
@@ -25,8 +26,8 @@ type Pacient struct {
 	Weight float64 `gorm:"not null"`
 
 	// Datos de Metas / Objetivos
-	TargetWeight  float64   `gorm:"not null"`                   // kg
-	ActivityLevel string    `gorm:"type:varchar(100);not null"` // p.ej. "Sedentario", "Ligero", "Moderado", etc.
-	DietaryGoal   string    `gorm:"type:varchar(100);not null"` // p.ej. "Perder peso", "Salud mejorada", etc.
-	TargetDate    time.Time `gorm:"type:date"`
+	TargetWeight  float64                     `gorm:"not null"`                   // kg
+	ActivityLevel ActivityLevel.ActivityLevel `gorm:"type:varchar(100);not null"` // p.ej. "Sedentario", "Ligero", "Moderado", etc.
+	DietaryGoal   string                      `gorm:"type:varchar(100);not null"` // p.ej. "Perder peso", "Salud mejorada", etc.
+	TargetDate    time.Time                   `gorm:"type:date"`
 }

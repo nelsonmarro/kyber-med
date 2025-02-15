@@ -13,6 +13,7 @@ import (
 	"github.com/nelsonmarro/kyber-med/config"
 	"github.com/nelsonmarro/kyber-med/internal/database"
 	pEntities "github.com/nelsonmarro/kyber-med/internal/pacient/entities"
+	ActivityLevel "github.com/nelsonmarro/kyber-med/internal/pacient/enums"
 	uEntities "github.com/nelsonmarro/kyber-med/internal/user/entities"
 )
 
@@ -55,11 +56,11 @@ func pacientsSeed(db database.Database) {
 		Gender:        "Masculino",
 		Address:       "Quito",
 		User:          user,
-		Height:        175.0,         // en cm
-		Weight:        80.0,          // peso actual en kg
-		TargetWeight:  72.0,          // meta de peso en kg
-		ActivityLevel: "Moderado",    // Sedentario | Ligero | Moderado | Activo, etc.
-		DietaryGoal:   "Perder peso", // o Ganar masa, Mantener, etc.
+		Height:        175.0,                  // en cm
+		Weight:        80.0,                   // peso actual en kg
+		TargetWeight:  72.0,                   // meta de peso en kg
+		ActivityLevel: ActivityLevel.Moderate, // Sedentario | Ligero | Moderado | Activo, etc.
+		DietaryGoal:   "Perder peso",          // o Ganar masa, Mantener, etc.
 		TargetDate:    time.Now().AddDate(0, 3, 0),
 	}
 
