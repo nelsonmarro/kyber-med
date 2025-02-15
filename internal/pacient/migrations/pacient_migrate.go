@@ -45,18 +45,22 @@ func pacientsSeed(db database.Database) {
 
 	date = date.Add(-time.Duration(21-1) * time.Hour)
 	pacient := pEntities.Pacient{
-		BaseEntity:            commonentities.BaseEntity{},
-		FirstName:             fmt.Sprintf("Paciente %d", 1),
-		LastName:              fmt.Sprintf("Last %d", 1),
-		Email:                 fmt.Sprintf("nelsonmarro%d@gmail.com", 1),
-		IDCard:                strconv.Itoa(rand.Intn(99999)),
-		PhoneNumber:           "0985134196",
-		DateOfBirth:           date,
-		Gender:                "Masculino",
-		Address:               "Quito",
-		EmergencyContactName:  "Alieen Torres",
-		EmergencyContactPhone: "0999079590",
-		User:                  user,
+		BaseEntity:    commonentities.BaseEntity{},
+		FirstName:     fmt.Sprintf("Paciente %d", 1),
+		LastName:      fmt.Sprintf("Last %d", 1),
+		Email:         fmt.Sprintf("nelsonmarro%d@gmail.com", 1),
+		IDCard:        strconv.Itoa(rand.Intn(99999)),
+		PhoneNumber:   "0985134196",
+		DateOfBirth:   date,
+		Gender:        "Masculino",
+		Address:       "Quito",
+		User:          user,
+		Height:        175.0,         // en cm
+		Weight:        80.0,          // peso actual en kg
+		TargetWeight:  72.0,          // meta de peso en kg
+		ActivityLevel: "Moderado",    // Sedentario | Ligero | Moderado | Activo, etc.
+		DietaryGoal:   "Perder peso", // o Ganar masa, Mantener, etc.
+		TargetDate:    time.Now().AddDate(0, 3, 0),
 	}
 
 	db.GetDb().Migrator().DropTable(&pEntities.Pacient{})
