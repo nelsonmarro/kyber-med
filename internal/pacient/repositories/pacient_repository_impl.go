@@ -57,3 +57,6 @@ func (r *pacientRepository) FindByCursor(cursor string, limit int, sortOrder str
 
 	return data, pagination, nil
 }
+
+func (r *pacientRepository) CreatePacient(pacient *pEntities.Pacient, userID string) (pEntities.Pacient, error) {
+}
