@@ -7,10 +7,12 @@ import (
 	"github.com/nelsonmarro/kyber-med/common/commonhelpers"
 	"github.com/nelsonmarro/kyber-med/internal/database"
 	pEntities "github.com/nelsonmarro/kyber-med/internal/pacient/entities"
+	uRepo "github.com/nelsonmarro/kyber-med/internal/user/repositories"
 )
 
 type pacientRepository struct {
-	db database.Database
+	db             database.Database
+	userRepository uRepo.UserRepository
 }
 
 func NewPacientRepository(db database.Database) PacientRepository {
@@ -58,5 +60,15 @@ func (r *pacientRepository) FindByCursor(cursor string, limit int, sortOrder str
 	return data, pagination, nil
 }
 
-func (r *pacientRepository) CreatePacient(pacient *pEntities.Pacient, userID string) (pEntities.Pacient, error) {
+func (r *pacientRepository) CreatePacient(pacient *pEntities.Pacient, userID string) (*pEntities.Pacient, error) {
+	db := r.db.GetDb()
+
+	userDb, err := r.userRepository.GetUserByID(userID)
+	if err != nil {
+		return nil, err
+	}
+
+	if userDb == nil {
+		return nil, fmt.Errorf("user not found")
+	}
 }

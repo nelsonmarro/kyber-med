@@ -1,4 +1,4 @@
-package repositories
+package user
 
 import (
 	"github.com/nelsonmarro/kyber-med/internal/database"

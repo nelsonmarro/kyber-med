@@ -1,4 +1,4 @@
-package repositories
+package user
 
 import (
 	uEntities "github.com/nelsonmarro/kyber-med/internal/user/entities"
