@@ -29,19 +29,34 @@ func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortO
 	var pacientSliceDto []pDtos.PacientDto
 	for _, pacient := range pacientSliceDd {
 		pacientSliceDto = append(pacientSliceDto, pDtos.PacientDto{
-			BaseDto:               commondtos.BaseDto{ID: pacient.ID, CreatedAt: pacient.CreatedAt},
-			FirstName:             pacient.FirstName,
-			LastName:              pacient.LastName,
-			Email:                 pacient.Email,
-			IDCard:                pacient.IDCard,
-			PhoneNumber:           pacient.PhoneNumber,
-			DateOfBirth:           pacient.DateOfBirth,
-			Gender:                pacient.Gender,
-			Address:               pacient.Address,
-			EmergencyContactName:  pacient.EmergencyContactName,
-			EmergencyContactPhone: pacient.EmergencyContactPhone,
+			BaseDto:       commondtos.BaseDto{ID: pacient.ID, CreatedAt: pacient.CreatedAt},
+			FirstName:     pacient.FirstName,
+			LastName:      pacient.LastName,
+			Email:         pacient.Email,
+			IDCard:        pacient.IDCard,
+			PhoneNumber:   pacient.PhoneNumber,
+			DateOfBirth:   pacient.DateOfBirth,
+			Gender:        pacient.Gender,
+			Address:       pacient.Address,
+			Age:           pacient.Age,
+			Height:        pacient.Height,
+			Weight:        pacient.Weight,
+			TargetWeight:  pacient.TargetWeight,
+			ActivityLevel: pacient.ActivityLevel,
+			DietaryGoal:   pacient.DietaryGoal,
+			TargetDate:    pacient.TargetDate,
 		})
 	}
 
 	return pacientSliceDto, pagination, err
+}
+
+// CreatePacient implements PacientService.
+func (s *pacientServiceImpl) CreatePacient(pacientDto pDtos.PacientDto) (pDtos.PacientDto, error) {
+	panic("unimplemented")
+}
+
+// GetPacientByID implements PacientService.
+func (s *pacientServiceImpl) GetPacientByID(id string) (pDtos.PacientDto, error) {
+	panic("unimplemented")
 }
