@@ -71,4 +71,18 @@ func (r *pacientRepository) CreatePacient(pacient *pEntities.Pacient, userID str
 	if userDb == nil {
 		return nil, fmt.Errorf("user not found")
 	}
+
+	pacient.UserID = userDb.ID
+	result := db.Create(&pacient)
+	if result != nil && result.Error != nil {
+		return nil, result.Error
+	}
+
+	return pacient, nil
+}
+
+func (r *pacientRepository) GetPacientByID(pacientID string) (*pEntities.Pacient, error) {
+	db := r.db.GetDb()
+
+	pacient, err := db.First(&pEntities.Pacient{}, pacientID)
 }
