@@ -138,17 +138,15 @@ func seedData(db *gorm.DB) {
 	for i := 0; i < 10; i++ {
 		date = date.Add(-time.Duration(21-i) * time.Hour)
 		pacients = append(pacients, entities.Pacient{
-			BaseEntity:            commonentities.BaseEntity{},
-			FirstName:             fmt.Sprintf("Paciente %d", i),
-			LastName:              fmt.Sprintf("Last %d", i),
-			Email:                 fmt.Sprintf("nelsonmarro%d@gmail.com", i),
-			IDCard:                strconv.Itoa(rand.Intn(99999)),
-			PhoneNumber:           "0985134196",
-			DateOfBirth:           date,
-			Gender:                "Masculino",
-			Address:               "Quito",
-			EmergencyContactName:  "Alieen Torres",
-			EmergencyContactPhone: "0999079590",
+			BaseEntity:  commonentities.BaseEntity{},
+			FirstName:   fmt.Sprintf("Paciente %d", i),
+			LastName:    fmt.Sprintf("Last %d", i),
+			Email:       fmt.Sprintf("nelsonmarro%d@gmail.com", i),
+			IDCard:      strconv.Itoa(rand.Intn(99999)),
+			PhoneNumber: "0985134196",
+			DateOfBirth: date,
+			Gender:      "Masculino",
+			Address:     "Quito",
 		})
 	}
 

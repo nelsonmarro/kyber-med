@@ -7,6 +7,6 @@ import (
 
 type PacientRepository interface {
 	FindByCursor(cursor string, limit int, sortOrder string) (data []pEntities.Pacient, pagination commondtos.PaginationInfo, err error)
-	CreatePacient(pacient *pEntities.Pacient, userID string) (*pEntities.Pacient, error)
+	CreatePacient(pacient *pEntities.Pacient, userID string) error
 	GetPacientByID(pacientID string) (*pEntities.Pacient, error)
 }

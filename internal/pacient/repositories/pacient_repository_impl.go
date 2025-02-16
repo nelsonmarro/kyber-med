@@ -60,25 +60,25 @@ func (r *pacientRepository) FindByCursor(cursor string, limit int, sortOrder str
 	return data, pagination, nil
 }
 
-func (r *pacientRepository) CreatePacient(pacient *pEntities.Pacient, userID string) (*pEntities.Pacient, error) {
+func (r *pacientRepository) CreatePacient(pacient *pEntities.Pacient, userID string) error {
 	db := r.db.GetDb()
 
 	userDb, err := r.userRepository.GetUserByID(userID)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if userDb == nil {
-		return nil, fmt.Errorf("user not found")
+		return fmt.Errorf("user not found")
 	}
 
 	pacient.UserID = userDb.ID
 	result := db.Create(&pacient)
 	if result != nil && result.Error != nil {
-		return nil, result.Error
+		return result.Error
 	}
 
-	return pacient, nil
+	return nil
 }
 
 func (r *pacientRepository) GetPacientByID(pacientID string) (*pEntities.Pacient, error) {

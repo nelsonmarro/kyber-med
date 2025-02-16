@@ -52,8 +52,8 @@ func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortO
 	return pacientSliceDto, pagination, err
 }
 
-func (s *pacientServiceImpl) CreatePacient(pacientDto *pDtos.PacientDto, userID string) (*pDtos.PacientDto, error) {
-	pacienteDb := pEntities.Pacient{
+func (s *pacientServiceImpl) CreatePacient(pacientDto pDtos.UpsertPacientDto, userID string) (*pDtos.PacientDto, error) {
+	pacientDb := pEntities.Pacient{
 		FirstName:     pacientDto.FirstName,
 		LastName:      pacientDto.LastName,
 		Weight:        pacientDto.Weight,
@@ -72,12 +72,31 @@ func (s *pacientServiceImpl) CreatePacient(pacientDto *pDtos.PacientDto, userID 
 	}
 
 	// llamar al repositorio
-	paciente, err := s.pacientRepository.CreatePacient(&pacienteDb, userID)
+	err := s.pacientRepository.CreatePacient(&pacientDb, userID)
 	if err != nil {
 		return nil, err
 	}
 
-	return paciente, err
+	newPacient := pDtos.PacientDto{
+		BaseDto:       commondtos.BaseDto{ID: pacientDb.ID, CreatedAt: pacientDb.CreatedAt},
+		FirstName:     pacientDb.FirstName,
+		LastName:      pacientDb.LastName,
+		Email:         pacientDb.Email,
+		IDCard:        pacientDb.IDCard,
+		PhoneNumber:   pacientDb.PhoneNumber,
+		DateOfBirth:   pacientDb.DateOfBirth,
+		Gender:        pacientDb.Gender,
+		Address:       pacientDb.Address,
+		Age:           pacientDb.Age,
+		Height:        pacientDb.Height,
+		Weight:        pacientDb.Weight,
+		TargetWeight:  pacientDb.TargetWeight,
+		ActivityLevel: pacientDb.ActivityLevel,
+		DietaryGoal:   pacientDb.DietaryGoal,
+		TargetDate:    pacientDb.TargetDate,
+	}
+
+	return &newPacient, err
 }
 
 func (s *pacientServiceImpl) GetPacientByID(id string) (pDtos.PacientDto, error) {
