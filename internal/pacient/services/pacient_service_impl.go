@@ -3,6 +3,7 @@ package pacient
 import (
 	commondtos "github.com/nelsonmarro/kyber-med/common/commondtos"
 	pDtos "github.com/nelsonmarro/kyber-med/internal/pacient/dtos"
+	pEntities "github.com/nelsonmarro/kyber-med/internal/pacient/entities"
 	pRepo "github.com/nelsonmarro/kyber-med/internal/pacient/repositories"
 )
 
@@ -51,7 +52,32 @@ func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortO
 	return pacientSliceDto, pagination, err
 }
 
-func (s *pacientServiceImpl) CreatePacient(pacientDto pDtos.PacientDto, userID string) (pDtos.PacientDto, error) {
+func (s *pacientServiceImpl) CreatePacient(pacientDto *pDtos.PacientDto, userID string) (*pDtos.PacientDto, error) {
+	pacienteDb := pEntities.Pacient{
+		FirstName:     pacientDto.FirstName,
+		LastName:      pacientDto.LastName,
+		Weight:        pacientDto.Weight,
+		Height:        pacientDto.Height,
+		TargetWeight:  pacientDto.TargetWeight,
+		ActivityLevel: pacientDto.ActivityLevel,
+		Age:           pacientDto.Age,
+		Address:       pacientDto.Address,
+		Gender:        pacientDto.Gender,
+		DateOfBirth:   pacientDto.DateOfBirth,
+		DietaryGoal:   pacientDto.DietaryGoal,
+		PhoneNumber:   pacientDto.PhoneNumber,
+		TargetDate:    pacientDto.TargetDate,
+		Email:         pacientDto.Email,
+		IDCard:        pacientDto.IDCard,
+	}
+
+	// llamar al repositorio
+	paciente, err := s.pacientRepository.CreatePacient(&pacienteDb, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return paciente, err
 }
 
 func (s *pacientServiceImpl) GetPacientByID(id string) (pDtos.PacientDto, error) {
