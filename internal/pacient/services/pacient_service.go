@@ -7,6 +7,6 @@ import (
 
 type PacientService interface {
 	GetPacientsByCursor(cursor string, limit int, sortOrder string) ([]pDtos.PacientDto, commondtos.PaginationInfo, error)
-	CreatePacient(pacientDto pDtos.PacientDto) (pDtos.PacientDto, error)
+	CreatePacient(pacientDto pDtos.PacientDto, userID string) (pDtos.PacientDto, error)
 	GetPacientByID(id string) (pDtos.PacientDto, error)
 }

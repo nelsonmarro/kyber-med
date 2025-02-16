@@ -51,8 +51,7 @@ func (s *pacientServiceImpl) GetPacientsByCursor(cursor string, limit int, sortO
 	return pacientSliceDto, pagination, err
 }
 
-func (s *pacientServiceImpl) CreatePacient(pacientDto pDtos.PacientDto) (pDtos.PacientDto, error) {
-	panic("unimplemented")
+func (s *pacientServiceImpl) CreatePacient(pacientDto pDtos.PacientDto, userID string) (pDtos.PacientDto, error) {
 }
 
 func (s *pacientServiceImpl) GetPacientByID(id string) (pDtos.PacientDto, error) {
