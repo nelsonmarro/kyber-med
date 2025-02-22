@@ -11,10 +11,10 @@ run-local-server: ## Run the app locally
 	go run ./cmd/kybermed_server/main.go
 
 run-ui-desktop: ## Run the app locally
-	go run ./cmd/kybermed_UI/main.go
+	go run ./cmd/kybermed_UI/ui.go
 
 run-ui-mobile: ## Run the app locally
-	go run -tags mobile ./cmd/kybermed_UI/main.go
+	go run -tags mobile ./cmd/kybermed_UI/ui.go
 
 requirements: ## Generate go.mod & go.sum files
 	go mod tidy
