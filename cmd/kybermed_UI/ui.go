@@ -10,4 +10,4 @@ func main() {
 
 	mainWindow.SetContent()
 	mainWindow.ShowAndRun()
-}
+
