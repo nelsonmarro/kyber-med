@@ -1,21 +1,24 @@
 package main
 
 import (
-	"image/color"
-
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
 )
 
 func main() {
 	myApp := app.New()
-	myWindow := myApp.NewWindow("Border Layout")
-	rect := canvas.NewRectangle(color.NRGBA{R: 255, G: 0, B: 0, A: 255})
-	top := container.NewHBox(rect)
-	left := canvas.NewText("left", color.White)
-	middle := canvas.NewText("content", color.White)
-	content := container.NewBorder(top, nil, left, nil, middle)
-	myWindow.SetContent(content)
+	myWindow := myApp.NewWindow("TabContainer Widget")
+
+	tabs := container.NewAppTabs(
+		container.NewTabItem("Tab 1", widget.NewLabel("Hello")),
+		container.NewTabItem("Tab 2", widget.NewLabel("World!")),
+	)
+
+	// tabs.Append(container.NewTabItemWithIcon("Home", theme.HomeIcon(), widget.NewLabel("Home tab")))
+
+	tabs.SetTabLocation(container.TabLocationLeading)
+
+	myWindow.SetContent(tabs)
 	myWindow.ShowAndRun()
 }
