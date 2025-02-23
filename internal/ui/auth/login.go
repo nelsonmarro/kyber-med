@@ -4,6 +4,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 )
 
 type LoginPage struct {
@@ -20,8 +21,14 @@ func (l *LoginPage) CreateLoginPage() *fyne.Container {
 }
 
 func createPageElements() []fyne.CanvasObject {
+	imageLogo := canvas.NewImageFromFile("assets/plan.png")
+	imageLogo.Resize(fyne.Size{Width: 64, Height: 64})
+	imageLogo.FillMode = canvas.ImageFillOriginal
+
 	elemets := []fyne.CanvasObject{
-		canvas.NewImageFromFile("../../../assets/plan.png"),
+		layout.NewSpacer(),
+		imageLogo,
+		layout.NewSpacer(),
 	}
 
 	return elemets
