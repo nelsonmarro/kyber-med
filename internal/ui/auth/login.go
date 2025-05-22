@@ -17,7 +17,7 @@ func NewLoginPage() *LoginPage {
 }
 
 func (l *LoginPage) CreateLoginPage() *fyne.Container {
-	loginContainer := container.New(layout.NewVBoxLayout(), createPageElements()...)
+	loginContainer := container.NewVBox(createPageElements()...)
 	return loginContainer
 }
 
