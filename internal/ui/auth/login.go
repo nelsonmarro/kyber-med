@@ -17,7 +17,7 @@ func NewLoginPage() *LoginPage {
 }
 
 func (l *LoginPage) CreateLoginPage() *fyne.Container {
-	loginContainer := container.NewVBox(createPageElements()...)
+	loginContainer := container.New(layout.NewVBoxLayout(), createPageElements()...)
 	return loginContainer
 }
 
@@ -26,7 +26,6 @@ func createPageElements() []fyne.CanvasObject {
 	imageLogo.FillMode = canvas.ImageFillOriginal
 
 	elemets := []fyne.CanvasObject{
-		layout.NewSpacer(),
 		imageLogo,
 		widget.NewEntry(),
 		widget.NewEntry(),
