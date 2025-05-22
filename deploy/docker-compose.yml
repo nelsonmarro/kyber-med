@@ -29,7 +29,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: kybermed
     ports:
-      - "5432:5432"
+      - "5433:5433"
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:

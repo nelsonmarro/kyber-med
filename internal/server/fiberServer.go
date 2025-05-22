@@ -46,7 +46,6 @@ func (s *fiberServer) Start() {
 
 	s.app.Use(healthcheck.New())
 
-	s.app.Post("sdfsdf")
 	s.app.Use(cors.New(cors.Config{
 		AllowOrigins: "http://localhost:8100",
 		AllowMethods: strings.Join([]string{
